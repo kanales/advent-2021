@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Advent of Code 2021</title>
+  </head>
+  <body>
+    <script src="index.js"></script>
+
+    <main id="app">
+      <h1>Advent of Code 2021</h1>
+      <section>
+        <form id="form">
+          <div>
+            <label for="day-selector">Day</label>
+            <select name="day-selector" id="day-selector">
+              <option value="0">Test</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="input">Input:</label>
+            <textarea name="input" id="input" cols="30" rows="10"></textarea>
+          </div>
+
+          <button type="submit">Submit</button>
+        </form>
+        <div>
+          <label for="output">Output:</label>
+          <input disabled type="text" id="output" />
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const form = document.getElementById("form");
+      form.addEventListener("submit", ev => {
+        ev.preventDefault();
+
+        const input = document.getElementById("input");
+        const iv = input.value;
+        console.log("input:", iv);
+
+        const ov = window.wasm.report_repair(iv);
+        console.log("output:", ov);
+
+        const output = document.getElementById("output");
+        output.value = ov;
+      });
+    </script>
+  </body>
+</html>
