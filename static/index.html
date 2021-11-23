@@ -3,6 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <title>Advent of Code 2021</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+    />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <script src="index.js"></script>
@@ -26,26 +31,47 @@
           <button type="submit">Submit</button>
         </form>
         <div>
-          <label for="output">Output:</label>
-          <input disabled type="text" id="output" />
+          <label for="output-first">First part:</label>
+          <input disabled type="text" id="output-first" />
+          <label for="output-second">Second part:</label>
+          <input disabled type="text" id="output-second" />
         </div>
       </section>
     </main>
+    <div id="toast" class="toast">some text</div>
 
     <script>
+      const toast = document.getElementById("toast");
+      function error(err) {
+        toast.innerText = err;
+        toast.classList.add("toast-show");
+        setTimeout(() => {
+          toast.classList.remove("toast-show");
+        }, 3000);
+      }
+
       const form = document.getElementById("form");
       form.addEventListener("submit", ev => {
         ev.preventDefault();
 
         const input = document.getElementById("input");
-        const iv = input.value;
-        console.log("input:", iv);
+        const selector = document.getElementById("day-selector");
+        const output_first = document.getElementById("output-first");
+        const output_second = document.getElementById("output-second");
 
-        const ov = window.wasm.report_repair(iv);
-        console.log("output:", ov);
+        try {
+          const { first, second } = window.wasm.run(
+            input.value,
+            +selector.value
+          );
 
-        const output = document.getElementById("output");
-        output.value = ov;
+          output_first.value = first;
+          output_second.value = second;
+        } catch (err) {
+          error(err);
+          output_first.value = "";
+          output_second.value = "";
+        }
       });
     </script>
   </body>
