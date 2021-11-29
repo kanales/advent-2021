@@ -37,7 +37,7 @@ pub struct Output {
     pub second: i32,
 }
 
-fn run_helper(input: &str, day: i32) -> Result<Output, AdventError> {
+fn _run(input: &str, day: i32) -> Result<Output, AdventError> {
     let b = solutions!(day, input => {
         0 => solutions::ReportRepair,
     });
@@ -49,8 +49,8 @@ fn run_helper(input: &str, day: i32) -> Result<Output, AdventError> {
 
 #[wasm_bindgen]
 pub fn run(input: &str, day: i32) -> Result<Output, JsValue> {
-    match run_helper(input, day) {
+    match _run(input, day) {
         Ok(r) => Ok(r),
-        Err(_) => Err("Execution Error".into()),
+        Err(e) => Err(format!("Error: {}", e).into()),
     }
 }

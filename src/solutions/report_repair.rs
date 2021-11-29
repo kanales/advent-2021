@@ -1,6 +1,6 @@
+// Day 0: Example
 use crate::advent::{AdventError, AdventResult, Puzzle};
 use std::convert::{TryFrom, TryInto};
-
 pub struct ReportRepair(Vec<u32>);
 
 impl TryFrom<&str> for ReportRepair {
