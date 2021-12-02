@@ -1,6 +1,6 @@
 // Day 0: Example
 use crate::advent::{AdventError, AdventResult, Puzzle};
-use std::convert::{TryFrom, TryInto};
+use std::convert::TryFrom;
 pub struct ReportRepair(Vec<u32>);
 
 impl TryFrom<&str> for ReportRepair {
@@ -20,7 +20,7 @@ impl<'a> Puzzle<'a> for ReportRepair {
         for x in self.0.iter() {
             for y in self.0.iter() {
                 if x + y == 2020 {
-                    return (x * y).try_into().map_err(|_| AdventError::ExecutionError);
+                    return Ok((x * y) as i32);
                 }
             }
         }

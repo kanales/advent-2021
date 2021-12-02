@@ -1,12 +1,16 @@
-macro_rules! publish {
-    ($id:ident) => {
-        mod $id;
-        pub use $id::*;
-    };
-    ($id:ident, $($ids:ident),+) => {
-        publish!($id);
-       $( publish!($ids);)+
-    };
-}
+mod dive;
+mod report_repair;
+mod sonar_sweep;
 
-publish!(report_repair, sonar_sweep, dive);
+use crate::advent::{AdventError, AdventResult, Puzzle};
+use std::convert::TryFrom;
+
+pub const PUZZLES: &'static [&'static str] = &["SonarSweep", "Dive!"];
+
+pub fn run_puzzle(input: &str, day: u32) -> AdventResult<(i32, i32)> {
+    match day {
+        1 => sonar_sweep::SonarSweep::try_from(input)?.all(),
+        2 => dive::Dive::try_from(input)?.all(),
+        _ => Err(AdventError::UnknownDay(day)),
+    }
+}

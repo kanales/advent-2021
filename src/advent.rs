@@ -1,3 +1,5 @@
+use std::convert::TryFrom;
+
 #[derive(Debug, PartialEq, Eq)]
 pub enum AdventError {
     ParseError(String),
@@ -26,20 +28,6 @@ pub trait Puzzle<'a>: TryFrom<&'a str> {
     fn second(&self) -> AdventResult<i32>;
 
     fn all(&self) -> AdventResult<(i32, i32)> {
-        let out = (self.first()?, self.second()?);
-        Ok(out)
-    }
-}
-
-use std::convert::TryFrom;
-
-pub const PUZZLES: &'static [&'static str] = &["SonarSweep", "Dive!"];
-
-pub fn run_puzzle(input: &str, day: u32) -> AdventResult<(i32, i32)> {
-    use crate::solutions::*;
-    match day {
-        1 => SonarSweep::try_from(input)?.all(),
-        2 => Dive::try_from(input)?.all(),
-        _ => Err(AdventError::UnknownDay(day)),
+        Ok((self.first()?, self.second()?))
     }
 }

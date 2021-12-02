@@ -2,7 +2,6 @@ pub mod advent;
 pub mod solutions;
 
 use advent::AdventError;
-use std::convert::{TryFrom, TryInto};
 use wasm_bindgen::prelude::*;
 
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
@@ -16,20 +15,13 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 use advent::*;
 
 #[wasm_bindgen]
-pub fn report_repair(input: &str) -> Option<i32> {
-    let rr: solutions::ReportRepair = input.try_into().ok()?;
-
-    rr.first().ok()
-}
-
-#[wasm_bindgen]
 pub struct Output {
     pub first: i32,
     pub second: i32,
 }
 #[wasm_bindgen]
 pub fn options() -> Vec<JsValue> {
-    advent::PUZZLES
+    solutions::PUZZLES
         .iter()
         .map(|&s| JsValue::from_str(s))
         .collect()
@@ -37,7 +29,7 @@ pub fn options() -> Vec<JsValue> {
 
 #[wasm_bindgen]
 pub fn run(input: &str, day: u32) -> Result<Output, JsValue> {
-    match advent::run_puzzle(input, day) {
+    match solutions::run_puzzle(input, day) {
         Ok((a, b)) => Ok(Output {
             first: a,
             second: b,

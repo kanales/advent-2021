@@ -1,6 +1,6 @@
-// Day 1: Dive!
+// Day 2: Dive! https://adventofcode.com/2021/day/2
 use crate::advent::{AdventError, AdventResult, Puzzle};
-use std::convert::{TryFrom, TryInto};
+use std::convert::TryFrom;
 
 #[derive(Debug, PartialEq, Eq)]
 enum Instruction {
@@ -46,7 +46,7 @@ impl TryFrom<&str> for Dive {
     fn try_from(value: &str) -> AdventResult<Self> {
         let insts = value
             .lines()
-            .map(|line| line.try_into())
+            .map(Instruction::try_from)
             .collect::<AdventResult<_>>()?;
         Ok(Dive(insts))
     }
@@ -62,7 +62,7 @@ down 8
 forward 2";
     use Instruction::*;
     let expect = vec![Fwd(5), Down(5), Fwd(8), Up(3), Down(8), Fwd(2)];
-    let dive: Dive = input.try_into().unwrap();
+    let dive = Dive::try_from(input).unwrap();
     assert_eq!(dive.0, expect)
 }
 
