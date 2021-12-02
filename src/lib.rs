@@ -27,6 +27,13 @@ pub struct Output {
     pub first: i32,
     pub second: i32,
 }
+#[wasm_bindgen]
+pub fn options() -> Vec<JsValue> {
+    advent::PUZZLES
+        .iter()
+        .map(|&s| JsValue::from_str(s))
+        .collect()
+}
 
 #[wasm_bindgen]
 pub fn run(input: &str, day: u32) -> Result<Output, JsValue> {

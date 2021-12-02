@@ -33,10 +33,13 @@ pub trait Puzzle<'a>: TryFrom<&'a str> {
 
 use std::convert::TryFrom;
 
+pub const PUZZLES: &'static [&'static str] = &["SonarSweep", "Dive!"];
+
 pub fn run_puzzle(input: &str, day: u32) -> AdventResult<(i32, i32)> {
     use crate::solutions::*;
     match day {
         1 => SonarSweep::try_from(input)?.all(),
+        2 => Dive::try_from(input)?.all(),
         _ => Err(AdventError::UnknownDay(day)),
     }
 }

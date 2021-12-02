@@ -20,9 +20,7 @@
         <form id="form">
           <div>
             <label for="day-selector">Day:</label>
-            <select name="day-selector" id="day-selector">
-              <option value="1">Sonar Sweep</option>
-            </select>
+            <select name="day-selector" id="day-selector"></select>
           </div>
 
           <div>
@@ -44,45 +42,6 @@
     <footer></footer>
     <div id="toast" class="toast"></div>
 
-    <script>
-      const submit = document.getElementById("submit");
-      submit.disabled = true;
-      onwasm(() => {
-        console.log("ok");
-        submit.disabled = false;
-      });
-      const toast = document.getElementById("toast");
-      function error(err) {
-        toast.innerText = err;
-        toast.classList.add("toast-show");
-        setTimeout(() => {
-          toast.classList.remove("toast-show");
-        }, 3000);
-      }
-
-      const form = document.getElementById("form");
-      form.addEventListener("submit", ev => {
-        ev.preventDefault();
-
-        const input = document.getElementById("input");
-        const selector = document.getElementById("day-selector");
-        const output_first = document.getElementById("output-first");
-        const output_second = document.getElementById("output-second");
-
-        try {
-          const { first, second } = window.wasm.run(
-            input.value,
-            +selector.value
-          );
-
-          output_first.value = first;
-          output_second.value = second;
-        } catch (err) {
-          error(err);
-          output_first.value = "";
-          output_second.value = "";
-        }
-      });
-    </script>
+    <script src="main.js"></script>
   </body>
 </html>

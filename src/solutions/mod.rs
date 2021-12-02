@@ -9,4 +9,4 @@ macro_rules! publish {
     };
 }
 
-publish!(report_repair, sonar_sweep);
+publish!(report_repair, sonar_sweep, dive);
