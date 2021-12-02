@@ -5,11 +5,13 @@ const output_first = document.getElementById("output-first");
 const output_second = document.getElementById("output-second");
 const form = document.getElementById("form");
 const toast = document.getElementById("toast");
+const overlay = document.getElementById("overlay");
 
 submit.disabled = true;
+
 onwasm(() => {
   submit.disabled = false;
-
+  overlay.style.display = "none";
   wasm.options().forEach((v, idx) => {
     const opt = document.createElement("option");
     opt.setAttribute("value", idx + 1);
