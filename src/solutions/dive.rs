@@ -18,8 +18,8 @@ impl TryFrom<&str> for Instruction {
         let mut parts = value.split_whitespace();
         let left = parts
             .next()
-            .ok_or(ParseError("missing action".to_owned()))?;
-        let right = parts.next().ok_or(ParseError("missing value".to_owned()))?;
+            .ok_or_else(|| ParseError("missing action".to_owned()))?;
+        let right = parts.next().ok_or_else(|| ParseError("missing value".to_owned()))?;
         let right: i32 = right
             .parse::<i32>()
             .map_err(|e| ParseError(e.to_string()))?;

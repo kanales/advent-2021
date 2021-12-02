@@ -6,7 +6,7 @@ use crate::advent::{AdventError, AdventResult, Puzzle};
 use std::convert::TryFrom;
 
 // Puzzle solutions in order
-pub const PUZZLES: &'static [&'static str] = &["SonarSweep", "Dive!"];
+pub const PUZZLES: &[&str] = &["SonarSweep", "Dive!"];
 
 pub fn run_puzzle(input: &str, day: u32) -> AdventResult<(i32, i32)> {
     match day {

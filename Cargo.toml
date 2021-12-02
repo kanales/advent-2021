@@ -1,9 +1,9 @@
 # You must change these to your own details.
 [package]
-name = "rust-webpack-template"
-description = "My super awesome Rust, WebAssembly, and Webpack project!"
+name = "advent-2021"
+description = "Advent of Code 2021 implementation in rust➡️wasm"
 version = "0.1.0"
-authors = ["You <you@example.com>"]
+authors = ["Iván Canales <ivancanalestgna@gmail.com>"]
 categories = ["wasm"]
 readme = "README.md"
 edition = "2018"
@@ -18,7 +18,7 @@ lto = true
 
 [features]
 # If you uncomment this line, it will enable `wee_alloc`:
-#default = ["wee_alloc"]
+default = ["wee_alloc"]
 
 [dependencies]
 # The `wasm-bindgen` crate provides the bare minimum functionality needed
@@ -36,12 +36,6 @@ wee_alloc = { version = "0.4.2", optional = true }
 version = "0.3.22"
 features = ["console"]
 
-# The `console_error_panic_hook` crate provides better debugging of panics by
-# logging them with `console.error`. This is great for development, but requires
-# all the `std::fmt` and `std::panicking` infrastructure, so it's only enabled
-# in debug mode.
-[target."cfg(debug_assertions)".dependencies]
-console_error_panic_hook = "0.1.5"
 
 # These crates are used for running unit tests.
 [dev-dependencies]
