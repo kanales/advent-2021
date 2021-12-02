@@ -23,7 +23,8 @@ pub struct Output {
 pub fn options() -> Vec<JsValue> {
     solutions::PUZZLES
         .iter()
-        .map(|&s| JsValue::from_str(s))
+        .enumerate()
+        .map(|(idx, &s)| format!("{}: {}", idx, s).into())
         .collect()
 }
 
