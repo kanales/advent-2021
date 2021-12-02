@@ -10,13 +10,13 @@ impl TryFrom<&str> for ReportRepair {
         let numbers: Result<Vec<u32>, _> = value.lines().map(|x| x.parse::<u32>()).collect();
         match numbers {
             Ok(v) => Ok(ReportRepair(v)),
-            Err(_) => Err(AdventError::ParseError),
+            Err(e) => Err(AdventError::ParseError(e.to_string())),
         }
     }
 }
 
-impl Puzzle for ReportRepair {
-    fn first(&self) -> AdventResult {
+impl<'a> Puzzle<'a> for ReportRepair {
+    fn first(&self) -> AdventResult<i32> {
         for x in self.0.iter() {
             for y in self.0.iter() {
                 if x + y == 2020 {
@@ -26,7 +26,7 @@ impl Puzzle for ReportRepair {
         }
         Err(AdventError::EofError)
     }
-    fn second(&self) -> AdventResult {
+    fn second(&self) -> AdventResult<i32> {
         Ok(0)
     }
 }

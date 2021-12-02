@@ -22,35 +22,19 @@ pub fn report_repair(input: &str) -> Option<i32> {
     rr.first().ok()
 }
 
-macro_rules! solutions {
-    ($day:ident,$input:expr => { $($ex:pat => $id:path),+ $(,)?} ) => {
-        Box::new(match $day {
-            $($ex => <$id>::try_from($input),)+
-            _ => Err(advent::AdventError::UnknownDay($day))
-        }?)
-    };
-}
-
 #[wasm_bindgen]
 pub struct Output {
     pub first: i32,
     pub second: i32,
 }
 
-fn _run(input: &str, day: i32) -> Result<Output, AdventError> {
-    let b = solutions!(day, input => {
-        0 => solutions::ReportRepair,
-    });
-
-    let first = b.first()?;
-    let second = b.second()?;
-    Ok(Output { first, second })
-}
-
 #[wasm_bindgen]
-pub fn run(input: &str, day: i32) -> Result<Output, JsValue> {
-    match _run(input, day) {
-        Ok(r) => Ok(r),
-        Err(e) => Err(format!("Error: {}", e).into()),
+pub fn run(input: &str, day: u32) -> Result<Output, JsValue> {
+    match advent::run_puzzle(input, day) {
+        Ok((a, b)) => Ok(Output {
+            first: a,
+            second: b,
+        }),
+        Err(e) => Err(format!("{}", e).into()),
     }
 }

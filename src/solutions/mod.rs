@@ -5,8 +5,8 @@ macro_rules! publish {
     };
     ($id:ident, $($ids:ident),+) => {
         publish!($id);
-        publish!($ids);
+       $( publish!($ids);)+
     };
 }
 
-publish!(report_repair);
+publish!(report_repair, sonar_sweep);

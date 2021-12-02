@@ -3,23 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <title>Advent of Code 2021</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
-    />
+
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <script src="index.js"></script>
 
     <main id="app">
-      <h1>Advent of Code 2021</h1>
+      <h1>📅 Advent of Code 2021</h1>
+      <p>
+        Solutions for the
+        <a href="https://adventofcode.com/2021">advent of code 2021</a>.
+      </p>
+      <hr />
       <section>
         <form id="form">
           <div>
-            <label for="day-selector">Day</label>
+            <label for="day-selector">Day:</label>
             <select name="day-selector" id="day-selector">
-              <option value="0">Test</option>
+              <option value="1">Sonar Sweep</option>
             </select>
           </div>
 
@@ -28,19 +30,27 @@
             <textarea name="input" id="input" cols="30" rows="10"></textarea>
           </div>
 
-          <button type="submit">Submit</button>
+          <button id="submit" type="submit">Submit</button>
         </form>
+        <hr />
         <div>
           <label for="output-first">First part:</label>
-          <input disabled type="text" id="output-first" />
+          <input readonly type="text" id="output-first" />
           <label for="output-second">Second part:</label>
-          <input disabled type="text" id="output-second" />
+          <input readonly type="text" id="output-second" />
         </div>
       </section>
     </main>
-    <div id="toast" class="toast">some text</div>
+    <footer></footer>
+    <div id="toast" class="toast"></div>
 
     <script>
+      const submit = document.getElementById("submit");
+      submit.disabled = true;
+      onwasm(() => {
+        console.log("ok");
+        submit.disabled = false;
+      });
       const toast = document.getElementById("toast");
       function error(err) {
         toast.innerText = err;
