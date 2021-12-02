@@ -21,11 +21,7 @@ pub struct Output {
 }
 #[wasm_bindgen]
 pub fn options() -> Vec<JsValue> {
-    solutions::PUZZLES
-        .iter()
-        .enumerate()
-        .map(|(idx, &s)| format!("{}: {}", idx, s).into())
-        .collect()
+    solutions::PUZZLES.iter().map(|&s| s.into()).collect()
 }
 
 #[wasm_bindgen]

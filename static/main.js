@@ -13,7 +13,7 @@ onwasm(() => {
   wasm.options().forEach((v, idx) => {
     const opt = document.createElement("option");
     opt.setAttribute("value", idx + 1);
-    opt.innerText = v;
+    opt.innerText = `${idx + 1}: ${v}`;
     selector.appendChild(opt);
   });
 });
