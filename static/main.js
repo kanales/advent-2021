@@ -1,16 +1,16 @@
-const submit = document.getElementById("submit");
-const input = document.getElementById("input");
-const selector = document.getElementById("day-selector");
-const output_first = document.getElementById("output-first");
-const output_second = document.getElementById("output-second");
-const form = document.getElementById("form");
-const toast = document.getElementById("toast");
-const overlay = document.getElementById("overlay");
+const get = id => document.getElementById(id);
+const submit = get("submit"),
+  input = get("input"),
+  selector = get("day-selector"),
+  output_first = get("output-first"),
+  output_second = get("output-second"),
+  form = get("form"),
+  toast = get("toast"),
+  advent_link = get("advent-link"),
+  overlay = get("overlay");
 
 submit.disabled = true;
-
 onwasm(() => {
-  submit.disabled = false;
   overlay.style.display = "none";
   wasm.options().forEach((v, idx) => {
     const opt = document.createElement("option");
@@ -31,6 +31,20 @@ function error(err) {
     toast.classList.remove("toast-show");
   }, 3000);
 }
+
+const ADVENT_BASE = `https://adventofcode.com/2021`;
+selector.addEventListener("change", () => {
+  if (selector.value == 0) {
+    submit.disabled = true;
+
+    return;
+  }
+  submit.disabled = false;
+
+  const link = `${ADVENT_BASE}/day/${selector.value}`;
+  advent_link.setAttribute("href", link);
+  advent_link.innerText = link;
+});
 
 form.addEventListener("submit", ev => {
   ev.preventDefault();
