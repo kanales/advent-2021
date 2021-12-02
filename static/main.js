@@ -18,6 +18,10 @@ onwasm(() => {
   });
 });
 
+toast.addEventListener("click", () => {
+  toast.classList.remove("toast-show");
+});
+
 function error(err) {
   toast.innerText = err;
   toast.classList.add("toast-show");
