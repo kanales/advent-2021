@@ -1,4 +1,4 @@
-use crate::{AdventError, AdventResult, Puzzle};
+use crate::advent::{AdventError, AdventResult, Puzzle};
 use std::convert::TryFrom;
 
 #[derive(Debug)]

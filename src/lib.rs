@@ -1,7 +1,6 @@
 pub mod advent;
 pub mod solutions;
 
-use advent::AdventError;
 use wasm_bindgen::prelude::*;
 
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
@@ -12,7 +11,7 @@ use wasm_bindgen::prelude::*;
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
-use advent::*;
+// use advent::*;
 
 #[wasm_bindgen]
 pub struct Output {
