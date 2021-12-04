@@ -15,7 +15,7 @@ impl TryFrom<&str> for ReportRepair {
     }
 }
 
-impl<'a> Puzzle<'a> for ReportRepair {
+impl Puzzle for ReportRepair {
     fn first(&self) -> AdventResult<i32> {
         for x in self.0.iter() {
             for y in self.0.iter() {

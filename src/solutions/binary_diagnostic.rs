@@ -35,7 +35,7 @@ impl TryFrom<&str> for BinaryDiagnostic {
     }
 }
 
-impl<'a> Puzzle<'a> for BinaryDiagnostic {
+impl Puzzle for BinaryDiagnostic {
     fn first(&self) -> AdventResult<i32> {
         Ok((self.epsilon() * self.gamma()) as i32)
     }
@@ -64,11 +64,13 @@ impl BinaryDiagnostic {
         !self.gamma() & ((1 << self.digits) - 1)
     }
 
-    fn oxygen_rating(&self) -> i32 {
-        let gamma = self.gamma();
+    fn rating<F>(&self, from: u32, criterion: F) -> i32
+    where
+        F: Fn(i32) -> bool,
+    {
         let mut i = self.digits - 1;
         let mut mask = 1 << i;
-        let mut sel = gamma & mask;
+        let mut sel = from & mask;
         let mut candidates = self.values.clone();
         loop {
             i -= 1;
@@ -85,7 +87,7 @@ impl BinaryDiagnostic {
                 })
                 .collect();
 
-            if balance >= 0 {
+            if criterion(balance) {
                 sel |= 1 << i
             }
             mask |= 1 << i;
@@ -97,37 +99,12 @@ impl BinaryDiagnostic {
         }
     }
 
-    fn co2_rating(&self) -> i32 {
-        let epsilon = self.epsilon();
-        let mut i = self.digits - 1;
-        let mut mask = 1 << i;
-        let mut sel = epsilon & mask;
-        let mut candidates = self.values.clone();
-        loop {
-            i -= 1;
-            let mut balance = 0;
-            candidates = candidates
-                .into_iter()
-                .filter(|c| {
-                    if (c & mask) == sel {
-                        balance += if c & (1 << i) > 0 { 1 } else { -1 };
-                        true
-                    } else {
-                        false
-                    }
-                })
-                .collect();
+    fn oxygen_rating(&self) -> i32 {
+        self.rating(self.gamma(), |i| i >= 0)
+    }
 
-            if balance < 0 {
-                sel |= 1 << i
-            }
-            mask |= 1 << i;
-            match (candidates.len(), i) {
-                (1, _) => return candidates[0] as i32,
-                (_, 0) => return sel as i32,
-                _ => {}
-            }
-        }
+    fn co2_rating(&self) -> i32 {
+        self.rating(self.epsilon(), |i| i < 0)
     }
 }
 

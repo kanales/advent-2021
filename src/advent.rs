@@ -1,11 +1,17 @@
-use std::convert::TryFrom;
-
 #[derive(Debug, PartialEq, Eq)]
 pub enum AdventError {
     ParseError(String),
     ExecutionError,
     EofError,
+    NotImplemented,
     UnknownDay(u32),
+}
+
+use wasm_bindgen::JsValue;
+impl From<AdventError> for JsValue {
+    fn from(err: AdventError) -> Self {
+        err.to_string().into()
+    }
 }
 
 use std::fmt;
@@ -16,6 +22,7 @@ impl fmt::Display for AdventError {
             ParseError(e) => write!(f, "could not parse input, {}", e),
             ExecutionError => write!(f, "executing function"),
             EofError => write!(f, "could not derive solution from input"),
+            NotImplemented => write!(f, "not implemented"),
             UnknownDay(d) => write!(f, "unknown day '{}'", d),
         }
     }
@@ -23,7 +30,7 @@ impl fmt::Display for AdventError {
 
 pub type AdventResult<T> = Result<T, AdventError>;
 
-pub trait Puzzle<'a>: TryFrom<&'a str> {
+pub trait Puzzle {
     fn first(&self) -> AdventResult<i32>;
     fn second(&self) -> AdventResult<i32>;
 

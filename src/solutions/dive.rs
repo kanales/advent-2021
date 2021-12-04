@@ -19,7 +19,9 @@ impl TryFrom<&str> for Instruction {
         let left = parts
             .next()
             .ok_or_else(|| ParseError("missing action".to_owned()))?;
-        let right = parts.next().ok_or_else(|| ParseError("missing value".to_owned()))?;
+        let right = parts
+            .next()
+            .ok_or_else(|| ParseError("missing value".to_owned()))?;
         let right: i32 = right
             .parse::<i32>()
             .map_err(|e| ParseError(e.to_string()))?;
@@ -66,7 +68,7 @@ forward 2";
     assert_eq!(dive.0, expect)
 }
 
-impl<'a> Puzzle<'a> for Dive {
+impl Puzzle for Dive {
     fn second(&self) -> AdventResult<i32> {
         let mut x = 0;
         let mut y = 0;

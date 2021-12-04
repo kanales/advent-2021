@@ -34,7 +34,7 @@ fn parse() {
     assert_eq!(expect, got.0);
 }
 
-impl<'a> Puzzle<'a> for SonarSweep {
+impl Puzzle for SonarSweep {
     fn first(&self) -> AdventResult<i32> {
         let count = self.0.windows(2).filter(|r| r[0] < r[1]).count();
         Ok(count as i32)
