@@ -7,11 +7,11 @@ impl TryFrom<&str> for ReportRepair {
     type Error = AdventError;
 
     fn try_from(value: &str) -> Result<Self, Self::Error> {
-        let numbers: Result<Vec<u32>, _> = value.lines().map(|x| x.parse::<u32>()).collect();
-        match numbers {
-            Ok(v) => Ok(ReportRepair(v)),
-            Err(e) => Err(AdventError::ParseError(e.to_string())),
-        }
+        let numbers = value
+            .lines()
+            .map(|x| x.parse::<u32>())
+            .collect::<Result<_, _>>()?;
+        Ok(ReportRepair(numbers))
     }
 }
 

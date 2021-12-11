@@ -7,6 +7,13 @@ pub enum AdventError {
     UnknownDay(u32),
 }
 
+use AdventError::*;
+impl From<ParseIntError> for AdventError {
+    fn from(e: ParseIntError) -> Self {
+        ParseError(e.to_string())
+    }
+}
+
 use wasm_bindgen::JsValue;
 impl From<AdventError> for JsValue {
     fn from(err: AdventError) -> Self {
@@ -14,7 +21,7 @@ impl From<AdventError> for JsValue {
     }
 }
 
-use std::fmt;
+use std::{fmt, num::ParseIntError, string::ParseError};
 impl fmt::Display for AdventError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
         use AdventError::*;

@@ -9,11 +9,11 @@ impl TryFrom<&str> for SonarSweep {
 
     fn try_from(value: &str) -> Result<Self, Self::Error> {
         println!("{}", value);
-        let res: Result<Vec<u32>, _> = value.lines().map(|x| x.parse::<u32>()).collect();
-        match res {
-            Ok(v) => Ok(SonarSweep(v)),
-            Err(e) => Err(AdventError::ParseError(e.to_string())),
-        }
+        let res = value
+            .lines()
+            .map(|x| x.parse::<u32>())
+            .collect::<Result<_, _>>()?;
+        Ok(SonarSweep(res))
     }
 }
 

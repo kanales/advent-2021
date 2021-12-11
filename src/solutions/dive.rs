@@ -22,9 +22,7 @@ impl TryFrom<&str> for Instruction {
         let right = parts
             .next()
             .ok_or_else(|| ParseError("missing value".to_owned()))?;
-        let right: i32 = right
-            .parse::<i32>()
-            .map_err(|e| ParseError(e.to_string()))?;
+        let right: i32 = right.parse::<i32>()?;
 
         Ok(match left {
             "forward" => Fwd(right),

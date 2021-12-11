@@ -75,11 +75,8 @@ impl TryFrom<&str> for Board {
          */
         let values: Vec<_> = value
             .split_whitespace()
-            .map(|v| {
-                v.parse::<u32>()
-                    .map_err(|e| parse_error!("{}", e.to_string()))
-            })
-            .collect::<AdventResult<_>>()?;
+            .map(|v| v.parse::<u32>())
+            .collect::<Result<_, _>>()?;
         Ok(Board {
             values: values
                 .as_slice()
@@ -100,15 +97,12 @@ impl TryFrom<&str> for GiantSquid {
 
     fn try_from(value: &str) -> Result<Self, Self::Error> {
         let mut parts = value.split("\n\n");
-        let inputs: Vec<_> = parts
+        let inputs: Vec<u32> = parts
             .next()
             .ok_or(AdventError::EofError)?
             .split(',')
-            .map(|n| {
-                n.parse::<u32>()
-                    .map_err(|e| parse_error!("{}", e.to_string()))
-            })
-            .collect::<AdventResult<_>>()?;
+            .map(|n| n.parse::<u32>())
+            .collect::<Result<_, _>>()?;
 
         let boards: Vec<_> = parts.map(Board::try_from).collect::<AdventResult<_>>()?;
         Ok(GiantSquid { inputs, boards })
