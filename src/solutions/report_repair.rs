@@ -14,17 +14,17 @@ impl FromStr for ReportRepair {
 }
 
 impl Puzzle for ReportRepair {
-    fn first(&self) -> AdventResult<i32> {
+    fn first(&self) -> AdventResult<i64> {
         for x in self.0.iter() {
             for y in self.0.iter() {
                 if x + y == 2020 {
-                    return Ok((x * y) as i32);
+                    return Ok((x * y) as i64);
                 }
             }
         }
         Err(AdventError::EofError)
     }
-    fn second(&self) -> AdventResult<i32> {
+    fn second(&self) -> AdventResult<i64> {
         Ok(0)
     }
 }

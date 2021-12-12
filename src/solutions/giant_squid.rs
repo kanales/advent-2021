@@ -109,19 +109,19 @@ impl FromStr for GiantSquid {
 }
 
 impl Puzzle for GiantSquid {
-    fn first(&self) -> AdventResult<i32> {
+    fn first(&self) -> AdventResult<i64> {
         for i in 0..self.inputs.len() {
             for b in &self.boards {
                 let vals = &self.inputs[0..i];
                 if let Some(r) = b.bingo(vals) {
-                    return Ok((r * b.sum_unmarked(vals)) as i32);
+                    return Ok((r * b.sum_unmarked(vals)) as i64);
                 }
             }
         }
 
         Err(AdventError::EofError)
     }
-    fn second(&self) -> AdventResult<i32> {
+    fn second(&self) -> AdventResult<i64> {
         let mut winners = vec![false; self.boards.len()];
         let mut count = winners.len();
 
@@ -136,7 +136,7 @@ impl Puzzle for GiantSquid {
                 if let Some(v) = self.boards[j].bingo(vals) {
                     if count == 1 {
                         let res = self.boards[j].sum_unmarked(vals) * v;
-                        return Ok(res as i32);
+                        return Ok(res as i64);
                     }
                     winners[j] = true;
                     count -= 1;

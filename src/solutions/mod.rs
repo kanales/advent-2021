@@ -15,6 +15,7 @@ macro_rules! parse_error {
     };
 }
 
+#[derive(Debug)]
 pub enum Solution {
     Day1(sonar_sweep::SonarSweep),
     Day2(dive::Dive),
@@ -32,6 +33,7 @@ impl Solution {
             "Binary Diagnostic",
             "Giant Squid",
             "Hydrotermal Venture",
+            "Lanternfish",
         ]
     }
 
@@ -72,11 +74,11 @@ impl Solution {
 }
 
 impl Puzzle for Solution {
-    fn first(&self) -> AdventResult<i32> {
+    fn first(&self) -> AdventResult<i64> {
         self.exec(|p| p.first())
     }
 
-    fn second(&self) -> AdventResult<i32> {
+    fn second(&self) -> AdventResult<i64> {
         self.exec(|p| p.second())
     }
 }

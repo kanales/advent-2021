@@ -36,11 +36,11 @@ impl FromStr for BinaryDiagnostic {
 }
 
 impl Puzzle for BinaryDiagnostic {
-    fn first(&self) -> AdventResult<i32> {
-        Ok((self.epsilon() * self.gamma()) as i32)
+    fn first(&self) -> AdventResult<i64> {
+        Ok((self.epsilon() * self.gamma()) as i64)
     }
-    fn second(&self) -> AdventResult<i32> {
-        Ok((self.co2_rating() * self.oxygen_rating()) as i32)
+    fn second(&self) -> AdventResult<i64> {
+        Ok((self.co2_rating() * self.oxygen_rating()) as i64)
     }
 }
 

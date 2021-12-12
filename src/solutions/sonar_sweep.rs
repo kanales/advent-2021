@@ -33,11 +33,11 @@ fn parse() {
 }
 
 impl Puzzle for SonarSweep {
-    fn first(&self) -> AdventResult<i32> {
+    fn first(&self) -> AdventResult<i64> {
         let count = self.0.windows(2).filter(|r| r[0] < r[1]).count();
-        Ok(count as i32)
+        Ok(count as i64)
     }
-    fn second(&self) -> AdventResult<i32> {
+    fn second(&self) -> AdventResult<i64> {
         let window_sums: Vec<_> = self.0.windows(3).map(|r| r[0] + r[1] + r[2]).collect();
         println!("{:?}", window_sums);
         Ok(window_sums

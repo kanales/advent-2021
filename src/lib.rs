@@ -5,6 +5,7 @@ extern crate web_sys;
 use advent::Puzzle;
 use solutions::Solution;
 use wasm_bindgen::prelude::*;
+use web_sys::console;
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
 // allocator.
 //
@@ -24,6 +25,7 @@ pub fn options() -> Vec<JsValue> {
 }
 
 #[wasm_bindgen]
+#[derive(Debug)]
 pub struct JsPuzzle {
     puzzle: Solution,
 }
@@ -36,16 +38,16 @@ impl JsPuzzle {
 
 #[wasm_bindgen]
 impl JsPuzzle {
-    pub fn first(&self) -> Result<i32, JsValue> {
+    pub fn first(&self) -> Result<JsValue, JsValue> {
         match self.puzzle.first() {
-            Ok(v) => Ok(v),
+            Ok(v) => Ok(v.to_string().into()),
             Err(e) => Err(e.to_string().into()),
         }
     }
 
-    pub fn second(&self) -> Result<i32, JsValue> {
+    pub fn second(&self) -> Result<JsValue, JsValue> {
         match self.puzzle.second() {
-            Ok(v) => Ok(v),
+            Ok(v) => Ok(v.to_string().into()),
             Err(e) => Err(e.to_string().into()),
         }
     }
@@ -54,7 +56,10 @@ impl JsPuzzle {
 #[wasm_bindgen]
 pub fn puzzle(day: u32, input: &str) -> JsValue {
     match Solution::parse(day, input) {
-        Ok(x) => JsPuzzle::new(x).into(),
+        Ok(x) => {
+            let p = JsPuzzle::new(x);
+            p.into()
+        }
         Err(e) => e.into(),
     }
 }

@@ -38,6 +38,7 @@ impl FromStr for Instruction {
     }
 }
 
+#[derive(Debug)]
 pub struct Dive(Vec<Instruction>);
 
 impl FromStr for Dive {
@@ -67,7 +68,7 @@ forward 2";
 }
 
 impl Puzzle for Dive {
-    fn second(&self) -> AdventResult<i32> {
+    fn second(&self) -> AdventResult<i64> {
         let mut x = 0;
         let mut y = 0;
         let mut aim = 0;
@@ -82,10 +83,10 @@ impl Puzzle for Dive {
                 }
             }
         }
-        Ok(x * y)
+        Ok((x * y) as i64)
     }
 
-    fn first(&self) -> AdventResult<i32> {
+    fn first(&self) -> AdventResult<i64> {
         let mut x: i32 = 0;
         let mut y: i32 = 0;
 
@@ -96,7 +97,7 @@ impl Puzzle for Dive {
                 Instruction::Fwd(v) => x += v,
             }
         }
-        Ok(x * y)
+        Ok((x * y) as i64)
     }
 }
 

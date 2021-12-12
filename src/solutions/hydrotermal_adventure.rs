@@ -40,6 +40,7 @@ impl Segment {
     }
 }
 
+#[derive(Debug)]
 pub struct HydrothermalVenture {
     segments: Vec<Segment>,
 }
@@ -67,7 +68,7 @@ fn debug_board(board: &[u32], rows: usize, cols: usize) {
 
 use std::cmp::max;
 impl Puzzle for HydrothermalVenture {
-    fn first(&self) -> AdventResult<i32> {
+    fn first(&self) -> AdventResult<i64> {
         let (cols, rows) = self.size();
         let mut orthos = vec![0u32; cols * rows];
         for seg in &self.segments {
@@ -82,10 +83,10 @@ impl Puzzle for HydrothermalVenture {
         debug_board(&orthos, rows, cols);
 
         let count = orthos.iter().filter(|&x| *x > 1).count();
-        Ok(count as i32)
+        Ok(count as i64)
     }
 
-    fn second(&self) -> AdventResult<i32> {
+    fn second(&self) -> AdventResult<i64> {
         let (cols, rows) = self.size();
         let mut orthos = vec![0u32; cols * rows];
         for seg in &self.segments {
@@ -96,7 +97,7 @@ impl Puzzle for HydrothermalVenture {
         }
 
         let count = orthos.iter().filter(|&x| *x > 1).count();
-        Ok(count as i32)
+        Ok(count as i64)
     }
 }
 
@@ -173,8 +174,8 @@ impl FromStr for HydrothermalVenture {
 
 #[derive(Debug)]
 struct IterSegment {
-    dx: isize,
-    dy: isize,
+    dx: i64,
+    dy: i64,
     x: usize,
     y: usize,
     goalx: usize,
@@ -194,8 +195,8 @@ impl Iterator for IterSegment {
         if x == self.goalx && y == self.goaly {
             self.done = true;
         } else {
-            self.x = (self.x as isize + self.dx) as usize;
-            self.y = (self.y as isize + self.dy) as usize;
+            self.x = (self.x as i64 + self.dx) as usize;
+            self.y = (self.y as i64 + self.dy) as usize;
         }
 
         Some((x, y))

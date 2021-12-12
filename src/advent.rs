@@ -38,10 +38,10 @@ impl fmt::Display for AdventError {
 pub type AdventResult<T> = Result<T, AdventError>;
 
 pub trait Puzzle {
-    fn first(&self) -> AdventResult<i32>;
-    fn second(&self) -> AdventResult<i32>;
+    fn first(&self) -> AdventResult<i64>;
+    fn second(&self) -> AdventResult<i64>;
 
-    fn all(&self) -> AdventResult<(i32, i32)> {
+    fn all(&self) -> AdventResult<(i64, i64)> {
         Ok((self.first()?, self.second()?))
     }
 }
