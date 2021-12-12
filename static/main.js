@@ -50,12 +50,22 @@ form.addEventListener("submit", ev => {
   ev.preventDefault();
 
   try {
-    const { first, second } = window.wasm.run(input.value, +selector.value);
+    const puzzle = window.wasm.puzzle(+selector.value, input.value);
+    try {
+      output_first.value = puzzle.first();
+    } catch (err) {
+      error(err);
+      output_first.value = "";
+    }
 
-    output_first.value = first;
-    output_second.value = second;
+    try {
+      output_second.value = puzzle.second();
+    } catch (err) {
+      error(err);
+      output_second.value = "";
+    }
   } catch (err) {
-    error(err);
+    error(">" + err);
     output_first.value = "";
     output_second.value = "";
   }
