@@ -5,6 +5,7 @@ mod hydrotermal_adventure;
 mod lanternfish;
 mod report_repair;
 mod sonar_sweep;
+mod whale_treachery;
 
 use crate::advent::{AdventError, AdventResult, Puzzle};
 
@@ -23,6 +24,7 @@ pub enum Solution {
     Day4(giant_squid::GiantSquid),
     Day5(hydrotermal_adventure::HydrothermalVenture),
     Day6(lanternfish::Lanternfish),
+    Day7(whale_treachery::CrabSwarm),
 }
 
 impl Solution {
@@ -34,6 +36,7 @@ impl Solution {
             "Giant Squid",
             "Hydrotermal Venture",
             "Lanternfish",
+            "The Treachery of Whales",
         ]
     }
 
@@ -48,6 +51,7 @@ impl Solution {
             Self::Day4(p) => f(p),
             Self::Day5(p) => f(p),
             Self::Day6(p) => f(p),
+            Self::Day7(p) => f(p),
         }
     }
 
@@ -69,6 +73,7 @@ impl Solution {
             4 => Day4(giant_squid::GiantSquid),
             5 => Day5(hydrotermal_adventure::HydrothermalVenture),
             6 => Day6(lanternfish::Lanternfish),
+            7 => Day7(whale_treachery::CrabSwarm),
         }
     }
 }
