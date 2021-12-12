@@ -1,10 +1,10 @@
 pub mod advent;
 pub mod solutions;
 
+extern crate web_sys;
 use advent::Puzzle;
-use solutions::factory;
+use solutions::Solution;
 use wasm_bindgen::prelude::*;
-
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
 // allocator.
 //
@@ -16,30 +16,20 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 // use advent::*;
 
 #[wasm_bindgen]
-pub struct PuzzleJs;
-
-impl PuzzleJs {
-    pub fn first() -> Result<i32, JsValue> {
-        todo!()
-    }
-
-    pub fn second() -> Result<i32, JsValue> {
-        todo!()
-    }
-}
-
-#[wasm_bindgen]
 pub fn options() -> Vec<JsValue> {
-    solutions::PUZZLES.iter().map(|&s| s.into()).collect()
+    solutions::Solution::puzzles()
+        .iter()
+        .map(|&s| s.into())
+        .collect()
 }
 
 #[wasm_bindgen]
 pub struct JsPuzzle {
-    puzzle: Box<dyn Puzzle>,
+    puzzle: Solution,
 }
 
 impl JsPuzzle {
-    pub fn new(puzzle: Box<dyn Puzzle>) -> Self {
+    pub fn new(puzzle: Solution) -> Self {
         JsPuzzle { puzzle }
     }
 }
@@ -63,7 +53,7 @@ impl JsPuzzle {
 
 #[wasm_bindgen]
 pub fn puzzle(day: u32, input: &str) -> JsValue {
-    match factory(day, input) {
+    match Solution::parse(day, input) {
         Ok(x) => JsPuzzle::new(x).into(),
         Err(e) => e.into(),
     }

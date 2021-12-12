@@ -21,7 +21,7 @@ impl From<AdventError> for JsValue {
     }
 }
 
-use std::{fmt, num::ParseIntError, string::ParseError};
+use std::{fmt, num::ParseIntError};
 impl fmt::Display for AdventError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
         use AdventError::*;

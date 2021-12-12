@@ -1,5 +1,4 @@
 use crate::advent::{AdventError, AdventResult, Puzzle};
-use crate::parse_error;
 use std::convert::{TryFrom, TryInto};
 
 #[derive(Debug)]
