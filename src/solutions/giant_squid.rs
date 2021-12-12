@@ -1,5 +1,5 @@
 use crate::advent::{AdventError, AdventResult, Puzzle};
-use std::convert::{TryFrom, TryInto};
+use std::{convert::TryInto, str::FromStr};
 
 #[derive(Debug)]
 struct Board {
@@ -61,10 +61,10 @@ impl std::ops::Index<(usize, usize)> for Board {
     }
 }
 
-impl TryFrom<&str> for Board {
-    type Error = AdventError;
+impl FromStr for Board {
+    type Err = AdventError;
 
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
         /*
         22 13 17 11  0
          8  2 23  4 24
@@ -91,19 +91,19 @@ pub struct GiantSquid {
     boards: Vec<Board>,
 }
 
-impl TryFrom<&str> for GiantSquid {
-    type Error = AdventError;
+impl FromStr for GiantSquid {
+    type Err = AdventError;
 
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
         let mut parts = value.split("\n\n");
         let inputs: Vec<u32> = parts
             .next()
             .ok_or(AdventError::EofError)?
             .split(',')
-            .map(|n| n.parse::<u32>())
+            .map(u32::from_str)
             .collect::<Result<_, _>>()?;
 
-        let boards: Vec<_> = parts.map(Board::try_from).collect::<AdventResult<_>>()?;
+        let boards: Vec<_> = parts.map(Board::from_str).collect::<AdventResult<_>>()?;
         Ok(GiantSquid { inputs, boards })
     }
 }
@@ -173,7 +173,7 @@ mod tests {
 22 11 13  6  5
  2  0 12  3  7";
 
-        GiantSquid::try_from(s).unwrap()
+        GiantSquid::from_str(s).unwrap()
     }
 
     #[test]

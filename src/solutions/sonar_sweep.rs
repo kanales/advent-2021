@@ -1,18 +1,16 @@
+use std::str::FromStr;
+
 use crate::advent::{AdventError, AdventResult, Puzzle};
-use std::convert::TryFrom;
 
 #[derive(Debug)]
 pub struct SonarSweep(Vec<u32>);
 
-impl TryFrom<&str> for SonarSweep {
-    type Error = AdventError;
+impl FromStr for SonarSweep {
+    type Err = AdventError;
 
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
         println!("{}", value);
-        let res = value
-            .lines()
-            .map(|x| x.parse::<u32>())
-            .collect::<Result<_, _>>()?;
+        let res = value.lines().map(u32::from_str).collect::<Result<_, _>>()?;
         Ok(SonarSweep(res))
     }
 }
@@ -30,7 +28,7 @@ fn parse() {
 260
 263";
     let expect = vec![199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
-    let got = SonarSweep::try_from(input).unwrap();
+    let got = SonarSweep::from_str(input).unwrap();
     assert_eq!(expect, got.0);
 }
 

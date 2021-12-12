@@ -1,16 +1,14 @@
+use std::str::FromStr;
+
 // Day 0: Example
 use crate::advent::{AdventError, AdventResult, Puzzle};
-use std::convert::TryFrom;
 pub struct ReportRepair(Vec<u32>);
 
-impl TryFrom<&str> for ReportRepair {
-    type Error = AdventError;
+impl FromStr for ReportRepair {
+    type Err = AdventError;
 
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
-        let numbers = value
-            .lines()
-            .map(|x| x.parse::<u32>())
-            .collect::<Result<_, _>>()?;
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
+        let numbers = value.lines().map(u32::from_str).collect::<Result<_, _>>()?;
         Ok(ReportRepair(numbers))
     }
 }

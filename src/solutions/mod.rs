@@ -2,11 +2,11 @@ mod binary_diagnostic;
 mod dive;
 mod giant_squid;
 mod hydrotermal_adventure;
+mod lanternfish;
 mod report_repair;
 mod sonar_sweep;
 
 use crate::advent::{AdventError, AdventResult, Puzzle};
-use std::convert::TryFrom;
 
 #[macro_export]
 macro_rules! parse_error {
@@ -21,6 +21,7 @@ pub enum Solution {
     Day3(binary_diagnostic::BinaryDiagnostic),
     Day4(giant_squid::GiantSquid),
     Day5(hydrotermal_adventure::HydrothermalVenture),
+    Day6(lanternfish::Lanternfish),
 }
 
 impl Solution {
@@ -44,6 +45,7 @@ impl Solution {
             Self::Day3(p) => f(p),
             Self::Day4(p) => f(p),
             Self::Day5(p) => f(p),
+            Self::Day6(p) => f(p),
         }
     }
 
@@ -52,7 +54,7 @@ impl Solution {
         macro_rules! puzzle {
             { $($p:pat => $i:ident ($t:path) ,)* } => {
                 match day {
-                    $($p => Ok($i(<$t>::try_from(input)?)),)*
+                    $($p => Ok($i(input.parse::<$t>()?)),)*
                     _ => return Err(AdventError::UnknownDay(day)),
                 }
             }
@@ -64,6 +66,7 @@ impl Solution {
             3 => Day3(binary_diagnostic::BinaryDiagnostic),
             4 => Day4(giant_squid::GiantSquid),
             5 => Day5(hydrotermal_adventure::HydrothermalVenture),
+            6 => Day6(lanternfish::Lanternfish),
         }
     }
 }

@@ -1,6 +1,6 @@
 use crate::advent::{AdventError, AdventResult, Puzzle};
 use crate::parse_error;
-use std::convert::TryFrom;
+use std::str::FromStr;
 
 #[derive(Debug)]
 pub struct BinaryDiagnostic {
@@ -19,15 +19,15 @@ fn parse_int(s: &str) -> AdventResult<u32> {
     Ok(b)
 }
 
-impl TryFrom<&str> for BinaryDiagnostic {
-    type Error = AdventError;
+impl FromStr for BinaryDiagnostic {
+    type Err = AdventError;
 
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
-        let lines: Vec<u32> = value.lines().map(parse_int).collect::<AdventResult<_>>()?;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let lines: Vec<u32> = s.lines().map(parse_int).collect::<AdventResult<_>>()?;
         if lines.is_empty() {
             return Err(AdventError::EofError);
         }
-        let digits = value.lines().next().unwrap().len();
+        let digits = s.lines().next().unwrap().len();
         Ok(BinaryDiagnostic {
             values: lines,
             digits,
@@ -125,7 +125,7 @@ mod tests {
 11001
 00010
 01010";
-        BinaryDiagnostic::try_from(input).unwrap()
+        BinaryDiagnostic::from_str(input).unwrap()
     }
 
     #[test]

@@ -1,5 +1,5 @@
 use crate::advent::{AdventError, AdventResult, Puzzle};
-use std::convert::TryFrom;
+use std::str::FromStr;
 use std::{fmt, vec};
 
 #[derive(Debug)]
@@ -102,7 +102,7 @@ impl Puzzle for HydrothermalVenture {
 
 #[cfg(test)]
 mod test {
-    use std::convert::TryFrom;
+    use std::str::FromStr;
 
     use crate::advent::Puzzle;
 
@@ -120,14 +120,14 @@ mod test {
 
     #[test]
     fn first() {
-        let hv = HydrothermalVenture::try_from(INPUT).unwrap();
+        let hv = HydrothermalVenture::from_str(INPUT).unwrap();
         let got = hv.first().unwrap();
         assert_eq!(got, 5)
     }
 
     #[test]
     fn second() {
-        let hv = HydrothermalVenture::try_from(INPUT).unwrap();
+        let hv = HydrothermalVenture::from_str(INPUT).unwrap();
         let got = hv.second().unwrap();
         assert_eq!(got, 12)
     }
@@ -141,13 +141,13 @@ impl fmt::Display for Segment {
     }
 }
 
-impl TryFrom<&str> for Segment {
-    type Error = AdventError;
-    fn try_from(line: &str) -> Result<Self, AdventError> {
+impl FromStr for Segment {
+    type Err = AdventError;
+    fn from_str(line: &str) -> Result<Self, AdventError> {
         let line: Vec<u32> = line
             .split(" -> ")
             .flat_map(|x| x.split(','))
-            .map(|e| e.parse::<u32>())
+            .map(u32::from_str)
             .collect::<Result<_, _>>()?;
         if line.len() != 4 {
             return Err(AdventError::EofError);
@@ -162,10 +162,10 @@ impl TryFrom<&str> for Segment {
     }
 }
 
-impl TryFrom<&str> for HydrothermalVenture {
-    type Error = AdventError;
-    fn try_from(x: &str) -> Result<Self, AdventError> {
-        let segments: Vec<_> = x.lines().map(Segment::try_from).collect::<Result<_, _>>()?;
+impl FromStr for HydrothermalVenture {
+    type Err = AdventError;
+    fn from_str(x: &str) -> Result<Self, AdventError> {
+        let segments: Vec<_> = x.lines().map(Segment::from_str).collect::<Result<_, _>>()?;
 
         Ok(HydrothermalVenture { segments })
     }
