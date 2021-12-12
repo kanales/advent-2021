@@ -1,4 +1,4 @@
-use std::{path::Iter, str::FromStr};
+use std::str::FromStr;
 
 use crate::advent::{AdventError, AdventResult, Puzzle};
 
@@ -17,13 +17,6 @@ where
     } else {
         (col[(l - 1) / 2] + col[(l + 1) / 2]) / 2
     }
-}
-
-fn mean(it: &[i64]) -> i64 {
-    let len = it.len() as f64;
-    let sum = it.iter().sum::<i64>() as f64;
-
-    (sum / len).round() as i64
 }
 
 fn gauss(x: i64) -> i64 {

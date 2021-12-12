@@ -5,7 +5,6 @@ extern crate web_sys;
 use advent::Puzzle;
 use solutions::Solution;
 use wasm_bindgen::prelude::*;
-use web_sys::console;
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
 // allocator.
 //
